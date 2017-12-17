@@ -1,32 +1,30 @@
 <div>
+
+  <h1>Chip input component in action</h1>
   
   <div>
 
-    <h3>Template-driven form sample</h3>
+    <h2>Template-driven form sample</h2>
 
     <form #templateForm="ngForm">
       <app-chip-input name="chips" [(ngModel)]="charactersChips"></app-chip-input>
     </form>
 
-    <ul>
-      <h4>Output:</h4>
-      <li *ngFor="let chip of charactersChips">
-        <pre>{{chip | json}}</pre>
-      </li>
-    </ul>
+    <h3>Output:</h3>
+    <pre>{{ charactersChips | json }}</pre>
 
   </div>
 
   <div>
     
-    <h3>Model-driven form sample</h3>
+    <h2>Model-driven form sample</h2>
 
     <form [formGroup]="charactersForm">
       <app-chip-input formControlName="chips"></app-chip-input>
     </form>
 
-    <h4>Output:</h4>
-    <pre>{{ charactersForm.value | json }}</pre>
+    <h3>Output:</h3>
+    <pre>{{ charactersForm.value.chips | json }}</pre>
 
   </div>
 
