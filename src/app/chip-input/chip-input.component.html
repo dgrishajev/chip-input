@@ -16,13 +16,13 @@
       </div>
     </li>
     <li class="input-item">
-      <input type="text" (input)="onInput($event)" placeholder="Type a character name" [(ngModel)]="inputVal">
+      <input type="text" (input)="onInput($event)" (keydown)="onKeyDown($event)" placeholder="Type a character name" [(ngModel)]="inputVal">
     </li>
   </ul>
 
 
   <ul *ngIf="fetchedSuggestions.length" class="suggestions-list">
-    <li *ngFor="let suggestion of fetchedSuggestions" [value]="suggestion" (click)="onSelect(suggestion)" class="suggestion-item">
+    <li *ngFor="let suggestion of fetchedSuggestions; let i = index;" [value]="suggestion" (click)="onSelect(suggestion)" class="suggestion-item" (mouseover)="focusedSuggestionIdx = i" [class.focus]="focusedSuggestionIdx === i">
       {{suggestion[entityProp]}}
     </li>
   </ul>
