@@ -1,0 +1,87 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.select-cont-list {
+  display: flex;
+  height: 35px;
+  padding: 0 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  &.bottom-square {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 4px;
+  border-radius: 6px;
+  background-color: #ccc;
+  white-space: nowrap;
+  cursor: default;
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.chip-remove-icon-cont,
+.chip-remove-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.chip-remove-icon-cont {
+  display: flex;
+  margin-left: 4px;
+  cursor: pointer;
+  &:hover .chip-remove-icon {
+    fill: red;
+  }
+}
+
+.input-item {
+  display: flex;
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+::-moz-placeholder {
+  opacity: 0.5;
+}
+:-ms-input-placeholder {
+  opacity: 0.5;
+}
+:-moz-placeholder {
+  opacity: 0.5;
+}
+
+.suggestions-list {
+  border: 1px solid #ccc;
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.suggestion-item {
+  padding: 4px 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #eee;
+  }
+}
