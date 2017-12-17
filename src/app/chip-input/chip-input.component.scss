@@ -32,6 +32,9 @@ ul {
   &:first-child {
     margin-left: 0;
   }
+  &.focus {
+    background-color: #888788;
+  }
 }
 
 .chip-remove-icon-cont,
