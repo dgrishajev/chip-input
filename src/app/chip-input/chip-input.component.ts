@@ -1,26 +1,60 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, Input, forwardRef, ElementRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ChipInputService } from './chip-input.service';
 
 @Component({
   selector: 'app-chip-input',
   templateUrl: './chip-input.component.html',
   styleUrls: ['./chip-input.component.scss'],
+  providers: [
+    { 
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ChipInputComponent),
+      multi: true
+    }
+  ],
   host: {
     '(document:click)': 'onBodyClick($event)',
   },
 })
-export class ChipInputComponent {
+export class ChipInputComponent implements ControlValueAccessor {
 
-  chips: Array<Object> = [];
+  @Input() _chips: Array<Object> = [];
+  @Input() propName: string = 'name';
+
   fetchedSuggestions: Array<Object> = [];
   focusedSuggestionIdx: number = -1;
-  entityProp: string = 'name';
   inputVal: string = '';
 
   constructor(
     private chipInputService: ChipInputService,
     private _eref: ElementRef
   ) {}
+
+  writeValue(value: Array<Object>) {
+    if ( value ) {
+      this.chips = value;
+    } else {
+      this.chips = [];
+    }
+  }
+
+  propagateChange = (_: any) => {};
+
+  registerOnChange(fn) {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched() {}
+
+  get chips() {
+    return this._chips;
+  }
+
+  set chips(val) {
+    this._chips = val;
+    this.propagateChange(this._chips);
+  }
 
   onInput(event): void {
     if ( event.target.value ) {

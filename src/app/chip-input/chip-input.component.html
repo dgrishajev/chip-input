@@ -2,7 +2,7 @@
 
   <ul class="select-cont-list" [class.bottom-square]="fetchedSuggestions.length">
     <li *ngFor="let chip of chips" class="chip">
-      {{chip[entityProp]}}
+      {{chip[propName]}}
       <div class="chip-remove-icon-cont" (click)="onRemove(chip)" >
         <svg class="chip-remove-icon" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
           <g>
@@ -23,7 +23,7 @@
 
   <ul *ngIf="fetchedSuggestions.length" class="suggestions-list">
     <li *ngFor="let suggestion of fetchedSuggestions; let i = index;" [value]="suggestion" (click)="onSelect(suggestion)" class="suggestion-item" (mouseover)="focusedSuggestionIdx = i" [class.focus]="focusedSuggestionIdx === i">
-      {{suggestion[entityProp]}}
+      {{suggestion[propName]}}
     </li>
   </ul>
 

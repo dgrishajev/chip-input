@@ -1,1 +1,31 @@
-<app-chip-input></app-chip-input>
+<div>
+  
+  <div>
+
+    <h3>Template-driven form sample</h3>
+
+    <form #templateForm="ngForm">
+      <app-chip-input name="chips" [(ngModel)]="sampleChips" [propName]="entityProp"></app-chip-input>
+    </form>
+
+    <ul>
+      <li *ngFor="let chip of sampleChips">
+        <pre>{{chip | json}}</pre>
+      </li>
+    </ul>
+
+  </div>
+
+  <div>
+    
+    <h3>Model-driven form sample</h3>
+
+    <form [formGroup]="reactiveForm">
+      <app-chip-input formControlName="chips"></app-chip-input>
+    </form>
+
+    <pre>{{ reactiveForm.value | json }}</pre>
+
+  </div>
+
+</div>
