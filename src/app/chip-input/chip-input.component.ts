@@ -25,11 +25,21 @@ export class ChipInputComponent implements ControlValueAccessor {
   fetchedSuggestions: Array<Object> = [];
   focusedSuggestionIdx: number = -1;
   inputVal: string = '';
+  efficientSearch: Function = this.debounce(this.search, 0.04);
 
   constructor(
     private chipInputService: ChipInputService,
     private _eref: ElementRef
   ) {}
+
+  get chips() {
+    return this._chips;
+  }
+
+  set chips(val) {
+    this._chips = val;
+    this.propagateChange(this._chips);
+  }
 
   writeValue(value: Array<Object>) {
     if ( value ) {
@@ -47,19 +57,16 @@ export class ChipInputComponent implements ControlValueAccessor {
 
   registerOnTouched() {}
 
-  get chips() {
-    return this._chips;
-  }
-
-  set chips(val) {
-    this._chips = val;
-    this.propagateChange(this._chips);
+  search(keyWord: string): void {
+    if ( this.inputVal ) {
+      this.chipInputService.getEntities(keyWord)
+        .subscribe(responce => this.fetchedSuggestions = responce['results']);
+    }
   }
 
   onInput(event): void {
     if ( event.target.value ) {
-      this.chipInputService.getEntities(event.target.value)
-        .subscribe(responce => this.fetchedSuggestions = responce['results']);
+      this.efficientSearch(event.target.value);
     } else {
       this.fetchedSuggestions = [];
     }
@@ -95,20 +102,33 @@ export class ChipInputComponent implements ControlValueAccessor {
     this.chips.splice( this.chips.indexOf(chip), 1 );
   }
 
+  onBodyClick(event): void {
+   if ( !this._eref.nativeElement.contains(event.target) ) this.collapseDropdown();
+  }
+
   isSelected(entity: Object): boolean {
     return this.chips.some(obj => {
       return JSON.stringify(entity) === JSON.stringify(obj);
     });
   }
 
-  collapseDropdown(): void {
-      this.fetchedSuggestions = [];
-      this.inputVal = '';
-      this.focusedSuggestionIdx = -1;
+  debounce(func, ms): Function {
+    let timeout;
+    return function() {
+      let context = this, args = arguments;
+      let later = function() {
+        timeout = null;
+        func.apply(context, args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, ms);
+    };
   }
 
-  onBodyClick(event): void {
-   if (!this._eref.nativeElement.contains(event.target)) this.collapseDropdown();
+  collapseDropdown(): void {
+    this.fetchedSuggestions = [];
+    this.inputVal = '';
+    this.focusedSuggestionIdx = -1;
   }
 
 }

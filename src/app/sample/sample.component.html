@@ -5,11 +5,12 @@
     <h3>Template-driven form sample</h3>
 
     <form #templateForm="ngForm">
-      <app-chip-input name="chips" [(ngModel)]="sampleChips" [propName]="entityProp"></app-chip-input>
+      <app-chip-input name="chips" [(ngModel)]="charactersChips"></app-chip-input>
     </form>
 
     <ul>
-      <li *ngFor="let chip of sampleChips">
+      <h4>Output:</h4>
+      <li *ngFor="let chip of charactersChips">
         <pre>{{chip | json}}</pre>
       </li>
     </ul>
@@ -20,11 +21,12 @@
     
     <h3>Model-driven form sample</h3>
 
-    <form [formGroup]="reactiveForm">
+    <form [formGroup]="charactersForm">
       <app-chip-input formControlName="chips"></app-chip-input>
     </form>
 
-    <pre>{{ reactiveForm.value | json }}</pre>
+    <h4>Output:</h4>
+    <pre>{{ charactersForm.value | json }}</pre>
 
   </div>
 
