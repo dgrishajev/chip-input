@@ -24,6 +24,7 @@ export class ChipInputComponent implements ControlValueAccessor {
 
   fetchedSuggestions: Array<Object> = [];
   focusedSuggestionIdx: number = -1;
+  focusedChipIdx: number = -1;
   inputVal: string = '';
   efficientSearch: Function = this.debounce(this.search, 0.04);
 
@@ -67,6 +68,7 @@ export class ChipInputComponent implements ControlValueAccessor {
   onInput(event): void {
     if ( event.target.value ) {
       this.efficientSearch(event.target.value);
+      this.focusedChipIdx = -1;
     } else {
       this.fetchedSuggestions = [];
     }
@@ -74,7 +76,12 @@ export class ChipInputComponent implements ControlValueAccessor {
 
   onKeyDown(event): void {
     if ( event.keyCode === 8 && !event.target.value ) {
-      this.chips.splice( this.chips.length - 1, 1 );
+      if ( this.focusedChipIdx === this.chips.length - 1 ) {
+        this.chips.splice( this.chips.length - 1, 1 );
+        this.focusedChipIdx = -1;
+      } else {
+        this.focusedChipIdx = this.chips.length - 1;
+      }
     }
     if ( event.keyCode === 40 && this.fetchedSuggestions.length && this.focusedSuggestionIdx < this.fetchedSuggestions.length - 1 ) {
       this.focusedSuggestionIdx++;
