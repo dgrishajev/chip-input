@@ -1,5 +1,7 @@
 # Chip Input
 
+**Angular chip input**
+
 ## Running
 
 1. Clone this repo: `git clone https://github.com/dgrishajev/chip-input.git`.
